@@ -1,12 +1,29 @@
 <?php
+add_filter('buddyforms_front_js_css_loader', 'buddyforms_hierarchical_load_css_js', 10, 1);
 function buddyforms_hierarchical_load_css_js($found){
-    global $buddyforms;
+    global $buddyforms, $post;
 
-        $found = true;
+    if(is_admin())
+        return $found;
+
+    if(!isset($buddyforms['buddyforms']))
+        return $found;
+
+    if(!isset($post))
+        return $found;
+
+    $form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
+
+    if(!$form_slug)
+        return $found;
+
+    if(!isset($buddyforms['buddyforms'][$form_slug]['hierarchical']))
+        return $found;
+
+    $found = true;
 
     return $found;
 }
-add_filter('buddyforms_front_js_css_loader', 'buddyforms_hierarchical_load_css_js', 10, 1);
 
 add_filter('the_content', 'buddyforms_hierarchical_display_child_posts', 10, 1);
 function buddyforms_hierarchical_display_child_posts($content){
@@ -24,6 +41,9 @@ function buddyforms_hierarchical_display_child_posts($content){
     $form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
 
     if(!$form_slug)
+        return $content;
+
+    if(!isset($buddyforms['buddyforms'][$form_slug]['hierarchical']))
         return $content;
 
     $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
@@ -64,12 +84,28 @@ function buddyforms_hierarchical_the_loop_actions($post_id){
     $form_slug = get_post_meta($post->ID, '_bf_form_slug', true);
 
     if(!$form_slug)
-        return ;
+        return;
+
+    if(!isset($buddyforms['buddyforms'][$form_slug]['hierarchical']))
+        return;
 
     if( current_user_can('buddyforms_'.$form_slug.'_create') ) {
         echo ' - <a href="#" id="' . $post_id . '" class="bf_create_new_child" type="button">Create new Child</a>';
     }
 
     echo ' - <a href="#" id="' . $post_id . '" class="bf_view_children" type="button">View Children</a>';
-//    echo ' - <a href="#" id="' . $post_id . '" class="bf_create_new_child" type="button">View Parent</a>';
+}
+
+add_action('buddyforms_delete_post', 'buddyforms_delete_child_posts');
+function buddyforms_delete_child_posts($post_id){
+
+    $childs = get_children( Array('post_parent' => $post_id));
+
+    if(empty($childs))
+        return;
+
+    foreach($childs as $child){
+        wp_delete_post($child->ID); // true => bypass trash and permanently delete
+    }
+
 }

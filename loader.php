@@ -43,6 +43,7 @@ add_action('init', 'buddyforms_hierarchical_require');
 function buddyforms_hierarchical_require() {
     require (dirname(__FILE__) . '/includes/form-ajax.php');
     require (dirname(__FILE__) . '/includes/functions.php');
+    require (dirname(__FILE__) . '/includes/form-elements.php');
 }
 
 

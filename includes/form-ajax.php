@@ -43,7 +43,7 @@ global $paged, $the_lp_query, $buddyforms, $form_slug;
 
 	$the_lp_query = new WP_Query( $args );
 
-    echo '<h2>View Child Posts of <a href="'.get_post_permalink($post_parent).'">' .get_the_title( $post_parent ). '</a></h2>';
+    echo '<h2>View Child Posts of <a href="'.get_post_permalink($post_parent).'">' .get_the_title( $post_parent ). '</a></h2><div class="close">X</div>';
 
     buddyforms_locate_template('buddyforms/the-loop.php');
 
