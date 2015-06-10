@@ -15,7 +15,10 @@ Hierarchical Posts Extension. Parent post = (Journal) child post = (log)
 
 == Description ==
 
-BuddyForms Extension for Hierarchical Custom Post Types
+
+
+This is the BuddyForms Extension for Hierarchical Custom Post Types. You need the BuddyForms plugin installed for the plugin to work. <a href="http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/" target="_blank">Get BuddyForms now!</a>
+
 
 The Extension makes it possible to select forms as Hierarchical. Parent post = (Journal) and child post = (log)
 

@@ -11,24 +11,16 @@ jQuery(document).ready(function (){
             beforeSend :function(){
                 jQuery('.buddyforms_posts_list .bf_modal').show();
             },
-            error: function(data){
-                alert('Fehler');
-            },
             success: function(data){
                 jQuery('.buddyforms_posts_list .bf_modal').hide();
                 jQuery('.buddyforms_posts_list').replaceWith(data);
+
                 // remove existing editor instance
                 tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
 
                 // init editor for newly appended div
                 var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
                 try { tinymce.init( init ); } catch(e){}
-                //tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
-                //tinymce.init(tinyMCEPreInit.mceInit['editpost_content']);
-                //tinymce.init( ajax_tinymce_init.mceInit['editpost_content'] );
-                // init editor for newly appended div
-                //var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
-                //try { tinymce.init( init ); } catch(event){}
             }
         });
 
@@ -43,32 +35,22 @@ jQuery(document).ready(function (){
             url: ajaxurl,
             data: {"action": "buddyforms_hierarchical_ajax_view_children", "post_id": post_id},
             beforeSend :function(){
-                jQuery('.buddyforms_posts_list .bf_modal_content').show();
-            },
-            error: function(data){
-                alert('Fehler');
+                jQuery('.buddyforms_posts_list .bf_modal').show();
             },
             success: function(data){
-                //jQuery('.buddyforms_posts_list .bf_modal').hide();
-                //jQuery('.buddyforms_posts_list').replaceWith(data);
-                jQuery('.buddyforms-list').hide();
-                jQuery('.buddyforms_posts_list .bf_modal_content').html(data);
-                // remove existing editor instance
+                jQuery('.buddyforms_posts_list .bf_modal').hide();
+                jQuery('.buddyforms_posts_list').replaceWith(data);
 
-                //tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
-                //tinymce.init(tinyMCEPreInit.mceInit['editpost_content']);
-                //tinymce.init( ajax_tinymce_init.mceInit['editpost_content'] );
+                // remove existing editor instance
+                tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
+
                 // init editor for newly appended div
-                //var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
-                //try { tinymce.init( init ); } catch(event){}
+                var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
+                try { tinymce.init( init ); } catch(e){}
             }
         });
 
     });
-    //jQuery('.close').on('click', function(event){
-    //    alert('close');
-    //    jQuery('.buddyforms_posts_list .bf_modal_content').hide();
-    //});
 
 
 });
