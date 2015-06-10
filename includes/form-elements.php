@@ -125,9 +125,6 @@ function bf_hierarchical_create_frontend_form_element($form, $form_args){
             if(!$post_parent_id)
                 $post_parent_id = $post_id;
 
-                echo '<br>parent_id' . $post_id;
-                echo '$post_parent_id' . $post_parent_id;
-
             $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $post_parent_id, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $post_parent_id, 'class' => 'settings-input');
             $form->addElement(new Element_Select($customfield['name'], 'hierarchical', $parents_select, $element_attr));
 

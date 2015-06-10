@@ -65,10 +65,10 @@ jQuery(document).ready(function (){
         });
 
     });
-    jQuery('.close').on('click', function(event){
-        alert('close');
-        jQuery('.buddyforms_posts_list .bf_modal_content').hide();
-    });
+    //jQuery('.close').on('click', function(event){
+    //    alert('close');
+    //    jQuery('.buddyforms_posts_list .bf_modal_content').hide();
+    //});
 
 
 });
