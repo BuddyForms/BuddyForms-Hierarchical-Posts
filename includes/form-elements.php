@@ -122,10 +122,20 @@ function bf_hierarchical_create_frontend_form_element($form, $form_args){
 
             $post_parent_id  =  wp_get_post_parent_id( $post_id );
 
-            if(!$post_parent_id)
-                $post_parent_id = $post_id;
+            if($post_parent)
+                $post_parent_id = $post_parent;
 
-            $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $post_parent_id, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $post_parent_id, 'class' => 'settings-input');
+                echo $post_id;
+
+                if($post_id && get_children(Array('post_parent' => $post_id))){
+                    $element_attr = isset($customfield['required']) ? array('disabled' => 'disabled', 'required' => true, 'value' => $post_parent_id, 'class' => 'settings-input', 'shortDesc' => $customfield['name'] . __(' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.')) : array('value' => $post_parent_id, 'class' => 'settings-input', 'disabled' => 'disabled', 'shortDesc' => $customfield['name'] . __(' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.')    );
+                } else {
+                    $element_attr = isset($customfield['required']) ? array('required' => true, 'value' => $post_parent_id, 'class' => 'settings-input', 'shortDesc' => $customfield['description']) : array('value' => $post_parent_id, 'class' => 'settings-input');
+                }
+
+
+
+
             $form->addElement(new Element_Select($customfield['name'], 'hierarchical', $parents_select, $element_attr));
 
             break;
