@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hierarchical Posts
  Plugin URI: http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
  Description: BuddyForms-Hierarchical-Posts
- Version: 1.0
+ Version: 0.1
  Author: Sven Lehnert
  Author URI: http://themekraft.com/members/svenl77/
  License: GPLv2 or later
