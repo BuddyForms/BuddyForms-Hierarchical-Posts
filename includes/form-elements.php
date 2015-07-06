@@ -11,12 +11,22 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox($form, $selected_f
 		    <div id="accordion_'.$selected_form_slug.'_hierarchical" class="accordion-body collapse">
 				<div class="accordion-inner">'));
 
-    $attache = '';
+    $hierarchical = '';
     if(isset($buddyforms_options['buddyforms'][$selected_form_slug]['hierarchical']))
-        $attache = $buddyforms_options['buddyforms'][$selected_form_slug]['hierarchical'];
+        $hierarchical = $buddyforms_options['buddyforms'][$selected_form_slug]['hierarchical'];
 
-    $form->addElement(new Element_Checkbox("<b>" . __('Allow Hierarchical Posts', 'buddyforms') . "</b>", "buddyforms_options[buddyforms][".$selected_form_slug."][hierarchical]", array("hierarchical" => "hierarchical"), array('value' => $attache, 'shortDesc' => __('hierarchical', 'buddyforms'))));
+    $form->addElement(new Element_Checkbox("<b>" . __('Allow Hierarchical Posts', 'buddyforms') . "</b>", "buddyforms_options[buddyforms][".$selected_form_slug."][hierarchical]", array("hierarchical" => "hierarchical"), array('value' => $hierarchical, 'shortDesc' => __('hierarchical', 'buddyforms'))));
     //$form->addElement(new Element_Checkbox("<b>" . __('Delete Hierarchical Posts', 'buddyforms') . "</b>", "buddyforms_options[buddyforms][".$selected_form_slug."][hierarchical]", array("hierarchical" => "hierarchical"), array('value' => $attache, 'shortDesc' => __('hierarchical', 'buddyforms'))));
+    $form->addElement(new Element_HTML('<br><br><b>' . __('Buttons Label:','buddyforms') . '</b><br><br>'));
+    $hierarchical_name =  'Children';
+    if (isset($buddyforms_options['buddyforms'][$selected_form_slug]['hierarchical_name']))
+        $hierarchical_name = $buddyforms_options['buddyforms'][$selected_form_slug]['hierarchical_name'];
+    $form->addElement( new Element_Textbox('<b>' . __('Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $selected_form_slug . "][hierarchical_name]", array('value' => $hierarchical_name)));
+
+    $hierarchical_singular_name = 'Child';
+    if (isset($buddyforms_options['buddyforms'][$selected_form_slug]['hierarchical_singular_name']))
+        $hierarchical_singular_name = $buddyforms_options['buddyforms'][$selected_form_slug]['hierarchical_singular_name'];
+    $form->addElement( new Element_Textbox('<b>' . __('Singular Name', 'buddyforms') . '</b>', "buddyforms_options[buddyforms][" . $selected_form_slug . "][hierarchical_singular_name]", array('value' => $hierarchical_singular_name)));
 
 
     $form->addElement(new Element_HTML('
@@ -146,10 +156,8 @@ add_filter('buddyforms_create_edit_form_display_element','bf_hierarchical_create
 add_filter('buddyforms_update_post_args', 'bf_hierarchical_post_control_args', 50, 1);
 function bf_hierarchical_post_control_args($args){
 
-    parse_str($_POST['data'], $formdata);
-
-    if(isset($formdata['hierarchical'])){
-        $args['post_parent'] = $formdata['hierarchical'];
+    if(isset($_POST['hierarchical'])){
+        $args['post_parent'] = $_POST['hierarchical'];
     }
 
     return $args;

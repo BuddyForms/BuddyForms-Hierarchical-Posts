@@ -2,6 +2,10 @@ jQuery(document).ready(function (){
     jQuery('.bf_create_new_child').on('click', function(event){
         var post_id = jQuery(this).attr('id');
 
+        if (typeof(tinyMCE) != "undefined") {
+            tinyMCE.triggerSave();
+        }
+
         event.preventDefault();
 
         jQuery.ajax({

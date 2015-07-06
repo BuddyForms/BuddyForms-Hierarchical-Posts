@@ -29,7 +29,7 @@
  */
 
 
-add_action('plugins_loaded', 'buddyforms_members_requirements');
+add_action('plugins_loaded', 'buddyforms_hierarchical_requirements');
 function buddyforms_hierarchical_requirements(){
 
     if( ! defined( 'buddyforms' )){
