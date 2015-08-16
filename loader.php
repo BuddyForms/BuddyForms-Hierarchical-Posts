@@ -1,11 +1,11 @@
 <?php
 /*
  Plugin Name: BuddyForms Hierarchical Posts
- Plugin URI: http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/
+ Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
  Description: BuddyForms Hierarchical Posts like Journal/logs
- Version: 0.1
+ Version: 0.2
  Author: Sven Lehnert
- Author URI: http://themekraft.com/members/svenl77/
+ Author URI: https://profiles.wordpress.org/svenl77
  License: GPLv2 or later
  Network: false
 
