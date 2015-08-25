@@ -64,4 +64,9 @@ cumming soon
 
 == Changelog ==
 
-0.1 firs beta
+== 0.2 ==
+change url from themekraft.com to buddyforms.com
+smaller bug fixes
+
+== 0.1 ==
+firs beta
