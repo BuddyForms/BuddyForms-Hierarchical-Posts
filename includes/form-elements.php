@@ -94,7 +94,7 @@ function bf_hierarchical_create_frontend_form_element($form, $form_args){
     $post_type = $buddyforms['buddyforms'][$form_slug]['post_type'];
 
     if(!$post_type)
-        return;
+        return $form;
 
     if(!isset($customfield['type']))
         return $form;
