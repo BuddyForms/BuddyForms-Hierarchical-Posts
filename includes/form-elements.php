@@ -52,7 +52,7 @@ function bf_hierarchical_add_form_element_to_sidebar($sidebar_elements){
     if($post->post_type != 'buddyforms')
         return;
 
-    $sidebar_elements[] = new Element_HTML('<p><a href="#" data-fieldtype="Hierarchical" data-unique="unique" class="bf_add_element_action">Hierarchical</a></p>');
+    $sidebar_elements[] = new Element_HTML('<p><a href="#" data-fieldtype="hierarchical" data-unique="unique" class="bf_add_element_action">Hierarchical</a></p>');
 
     return $sidebar_elements;
 }
