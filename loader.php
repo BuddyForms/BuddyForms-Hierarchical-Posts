@@ -29,26 +29,28 @@
  */
 
 
-add_action('plugins_loaded', 'buddyforms_hierarchical_requirements');
-function buddyforms_hierarchical_requirements(){
+add_action( 'plugins_loaded', 'buddyforms_hierarchical_requirements' );
+function buddyforms_hierarchical_requirements() {
 
-    if( ! defined( 'BUDDYFORMS_VERSION' )){
-        add_action( 'admin_notices', create_function( '', 'printf(\'<div id="message" class="error"><p><strong>\' . __(\'BuddyForms Hierarchical Form Elements needs BuddyForms to be installed. <a target="_blank" href="%s">--> Get it now</a>!\', " wc4bp_xprofile" ) . \'</strong></p></div>\', "http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/" );' ) );
-        return;
-    }
+	if ( ! defined( 'BUDDYFORMS_VERSION' ) ) {
+		add_action( 'admin_notices', create_function( '', 'printf(\'<div id="message" class="error"><p><strong>\' . __(\'BuddyForms Hierarchical Form Elements needs BuddyForms to be installed. <a target="_blank" href="%s">--> Get it now</a>!\', " wc4bp_xprofile" ) . \'</strong></p></div>\', "http://themekraft.com/store/wordpress-front-end-editor-and-form-builder-buddyforms/" );' ) );
+
+		return;
+	}
 
 }
 
-add_action('init', 'buddyforms_hierarchical_require');
+add_action( 'init', 'buddyforms_hierarchical_require' );
 function buddyforms_hierarchical_require() {
-    require (dirname(__FILE__) . '/includes/form-ajax.php');
-    require (dirname(__FILE__) . '/includes/functions.php');
-    require (dirname(__FILE__) . '/includes/form-elements.php');
+	require( dirname( __FILE__ ) . '/includes/form-ajax.php' );
+	require( dirname( __FILE__ ) . '/includes/functions.php' );
+	require( dirname( __FILE__ ) . '/includes/form-elements.php' );
 }
 
 
-add_action('buddyforms_front_js_css_enqueue', 'buddyforms_hierarchical_front_js_css_enqueue');
-function buddyforms_hierarchical_front_js_css_enqueue(){
-    wp_enqueue_script( 'buddyforms_hierarchical-js', plugins_url('includes/js/buddyforms_hierarchical.js', __FILE__),	array('jquery') );
+add_action( 'buddyforms_front_js_css_enqueue', 'buddyforms_hierarchical_front_js_css_enqueue' );
+function buddyforms_hierarchical_front_js_css_enqueue() {
+	wp_enqueue_script( 'buddyforms_hierarchical-js', plugins_url( 'includes/js/buddyforms_hierarchical.js', __FILE__ ), array( 'jquery' ) );
 }
+
 ?>
