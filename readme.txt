@@ -4,9 +4,9 @@ Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
 Description: BuddyForms Hierarchical Posts like Journal/logs
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, groups, post attached to groups
-Stable tag: 1.0
+Stable tag: 1.0.1
 Requires at least: 4.0
-Tested up to: 4.5.1
+Tested up to: 4.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Hierarchical Posts Extension. Parent post = (Journal) child post = (log)
 
 This is the BuddyForms extension for Hierarchical Custom Post Types. You need the BuddyForms plugin installed for the plugin to work. <a href="http://buddyforms.com" target="_blank">Get BuddyForms now!</a>
 
-The extension makes it possible to select forms as hierarchical. Parent post = (Journal) and child post = (log)
+Select forms as hierarchical. Parent post = (Journal) and child post = (log)
 
 In the posts list of the Hierarchical Form only the parent posts (Journals) are displayed. The child pages (logs) will not be displayed in the overview.
 
@@ -24,7 +24,7 @@ If a Journal is displayed, all child posts (logs) will be listed under the journ
 
 If a user creates a new Journal he can add content like in normal posts and describe the journal. The logs from the journal will be listed under the content
 
-<b>Form Elements</b>
+<h4>Form Elements</h4>
 
 Parent page select: to allow the user to make a log entry become a new parent.
 
@@ -63,6 +63,8 @@ You need the BuddyForms plugin installed for the plugin to work.
 coming soon
 
 == Changelog ==
+
+== 1.0.1 ==
 
 == 1.0 ==
 Fixed a issue in the create new url left over from the last BuddyForms Members update.
