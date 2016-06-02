@@ -65,6 +65,8 @@ coming soon
 == Changelog ==
 
 == 1.0.1 ==
+Reformat code to stay conform with the WordPress coding style guide.
+Fix an issue with the Create child link if used as sub form of a parent
 
 == 1.0 ==
 Fixed a issue in the create new url left over from the last BuddyForms Members update.
