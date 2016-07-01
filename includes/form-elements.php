@@ -1,6 +1,6 @@
 <?php
 function buddyforms_hierarchical_form_builder_sidebar_metabox() {
-	add_meta_box( 'buddyforms_hierarchical', __( "Hierarchical Posts", 'buddyforms' ), 'buddyforms_hierarchical_form_builder_sidebar_metabox_html', 'buddyforms', 'side', 'low' );
+	add_meta_box( 'buddyforms_hierarchical', __( "Hierarchical Posts", 'buddyforms' ), 'buddyforms_hierarchical_form_builder_sidebar_metabox_html', 'buddyforms', 'normal', 'low' );
 }
 
 function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
@@ -66,6 +66,26 @@ function bf_hierarchical_add_form_element_to_sidebar( $sidebar_elements ) {
 }
 
 add_filter( 'buddyforms_add_form_element_to_sidebar', 'bf_hierarchical_add_form_element_to_sidebar', 1, 2 );
+
+function bf_hierarchical_add_form_element_to_select( $elements_select_options ) {
+	global $post;
+
+	if ( $post->post_type != 'buddyforms' ) {
+		return;
+	}
+
+	$elements_select_options['Hierarchical'] = array(
+		'hierarchical' => array(
+			'label'     => __( 'Hierarchical', 'buddyforms' ),
+			'unique'    => 'unique'
+		),
+	);
+
+	return $elements_select_options;
+}
+
+add_filter( 'buddyforms_add_form_element_to_select', 'bf_hierarchical_add_form_element_to_select', 1, 2 );
+
 
 /*
  * Create the new Form Builder Form Element
