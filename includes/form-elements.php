@@ -36,11 +36,7 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 	}
 	$form_setup[] = new Element_Textbox( '<b>' . __( 'Singular Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical_singular_name]", array( 'value' => $hierarchical_singular_name ) );
 
-	foreach ( $form_setup as $key => $field ) {
-		echo '<div class="buddyforms_field_label">' . $field->getLabel() . '</div>';
-		echo '<div class="buddyforms_field_description">' . $field->getShortDesc() . '</div>';
-		echo '<div class="buddyforms_form_field">' . $field->render() . '</div>';
-	}
+	buddyforms_display_field_group_table($form_setup);
 }
 
 add_filter( 'add_meta_boxes', 'buddyforms_hierarchical_form_builder_sidebar_metabox', 1, 2 );
