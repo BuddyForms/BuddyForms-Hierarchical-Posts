@@ -1,6 +1,7 @@
 <?php
 function buddyforms_hierarchical_form_builder_sidebar_metabox() {
 	add_meta_box( 'buddyforms_hierarchical', __( "Hierarchical Posts", 'buddyforms' ), 'buddyforms_hierarchical_form_builder_sidebar_metabox_html', 'buddyforms', 'normal', 'low' );
+	add_filter('postbox_classes_buddyforms_buddyforms_hierarchical','buddyforms_metabox_class');
 }
 
 function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
@@ -70,11 +71,10 @@ function bf_hierarchical_add_form_element_to_select( $elements_select_options ) 
 		return;
 	}
 
-	$elements_select_options['Hierarchical'] = array(
-		'hierarchical' => array(
-			'label'     => __( 'Hierarchical', 'buddyforms' ),
-			'unique'    => 'unique'
-		),
+	$elements_select_options['hierarchical']['label'] = 'Hierarchical';
+	$elements_select_options['hierarchical']['fields']['hierarchical'] = array(
+		'label'     => __( 'Hierarchical', 'buddyforms' ),
+		'unique'    => 'unique'
 	);
 
 	return $elements_select_options;
