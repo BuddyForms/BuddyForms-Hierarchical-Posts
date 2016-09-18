@@ -2,6 +2,9 @@
 function buddyforms_hierarchical_form_builder_sidebar_metabox() {
 	add_meta_box( 'buddyforms_hierarchical', __( "Hierarchical Posts", 'buddyforms' ), 'buddyforms_hierarchical_form_builder_sidebar_metabox_html', 'buddyforms', 'normal', 'low' );
 	add_filter('postbox_classes_buddyforms_buddyforms_hierarchical','buddyforms_metabox_class');
+	add_filter('postbox_classes_buddyforms_buddyforms_hierarchical','buddyforms_metabox_show_if_form_type_posts');
+	add_filter('postbox_classes_buddyforms_buddyforms_hierarchical','buddyforms_metabox_show_if_post_type_none');
+
 }
 
 function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
