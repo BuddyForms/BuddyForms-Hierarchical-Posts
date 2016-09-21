@@ -75,6 +75,7 @@ function bf_hierarchical_add_form_element_to_select( $elements_select_options ) 
 	}
 
 	$elements_select_options['hierarchical']['label'] = 'Hierarchical';
+	$elements_select_options['hierarchical']['class'] = 'bf_show_if_f_type_post';
 	$elements_select_options['hierarchical']['fields']['hierarchical'] = array(
 		'label'     => __( 'Hierarchical', 'buddyforms' ),
 		'unique'    => 'unique'
