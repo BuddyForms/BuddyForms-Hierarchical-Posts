@@ -39,7 +39,7 @@ function buddyforms_hierarchical_ajax_view_children() {
 		'author'         => get_current_user_id()
 	);
 
-	$args = apply_filters( 'bf_post_to_display_args', $args );
+	$args = apply_filters( 'buddyforms_post_to_display_args', $args );
 
 	$the_lp_query = new WP_Query( $args );
 

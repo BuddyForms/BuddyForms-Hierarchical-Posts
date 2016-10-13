@@ -20,10 +20,10 @@ jQuery(document).ready(function (){
                 jQuery('.buddyforms_posts_list').replaceWith(data);
 
                 // remove existing editor instance
-                tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
+                tinymce.execCommand('mceRemoveEditor', true, 'buddyforms_form_content');
 
                 // init editor for newly appended div
-                var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
+                var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'buddyforms_form_content' ] );
                 try { tinymce.init( init ); } catch(e){}
             }
         });
@@ -46,10 +46,10 @@ jQuery(document).ready(function (){
                 jQuery('.buddyforms_posts_list').replaceWith(data);
 
                 // remove existing editor instance
-                tinymce.execCommand('mceRemoveEditor', true, 'editpost_content');
+                tinymce.execCommand('mceRemoveEditor', true, 'buddyforms_form_content');
 
                 // init editor for newly appended div
-                var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'editpost_content' ] );
+                var init = tinymce.extend( {}, tinyMCEPreInit.mceInit[ 'buddyforms_form_content' ] );
                 try { tinymce.init( init ); } catch(e){}
             }
         });
