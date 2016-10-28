@@ -4,9 +4,9 @@ Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
 Description: BuddyForms Hierarchical Posts like Journal/logs
 Tags: buddypress, user, members, profiles, custom post types, taxonomy, frontend posting, frontend editing, groups, post attached to groups
-Stable tag: 1.0.1
-Requires at least: 4.0
-Tested up to: 4.5.2
+Stable tag: 1.0.2
+Requires at least: 3.9
+Tested up to: 4.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,15 @@ You need the BuddyForms plugin installed for the plugin to work.
 coming soon
 
 == Changelog ==
+
+== 1.0.2 ==
+Support for the form builder select box added
+Use buddyforms_display_field_group_table to display options
+Add postbox_classes to make the postbox visible.
+Only show form type related form elements
+Create new functions to show hide metaboxes
+Work on the conditionals admin ui
+Hooks rename session
 
 == 1.0.1 ==
 Reformat code to stay conform with the WordPress coding style guide.
