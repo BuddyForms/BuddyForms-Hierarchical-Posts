@@ -1,5 +1,5 @@
 === BuddyForms Hierarchical Posts ===
-Contributors: svenl77, themekraft, buddyforms
+Contributors: svenl77, konradS, themekraft, buddyforms
 Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
 Description: BuddyForms Hierarchical Posts like Journal/logs

@@ -84,7 +84,7 @@ function bf_hierarchical_add_form_element_to_select( $elements_select_options ) 
 	return $elements_select_options;
 }
 
-add_filter( 'buddyforms_add_form_element_to_select', 'bf_hierarchical_add_form_element_to_select', 1, 2 );
+add_filter( 'buddyforms_add_form_element_select_option', 'bf_hierarchical_add_form_element_to_select', 1, 2 );
 
 
 /*
