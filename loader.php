@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hierarchical Posts
  Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
  Description: BuddyForms Hierarchical Posts like Journal/logs
- Version: 1.0.3
+ Version: 1.0.4
  Author: Sven Lehnert
  Author URI: https://profiles.wordpress.org/svenl77
  License: GPLv2 or later
