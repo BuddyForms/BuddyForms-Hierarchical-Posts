@@ -48,24 +48,29 @@ add_action('init', function(){
 		// Create the required plugins array
 		if ( ! defined( 'BUDDYFORMS_PRO_VERSION' ) ) {
 			$plugins['buddyforms'] = array(
-				'name'      => 'BuddyForms',
-				'slug'      => 'buddyforms',
-				'required'  => true,
+				'name'     => 'BuddyForms',
+				'slug'     => 'buddyforms',
+				'required' => true,
 			);
+
+			$config = array(
+				'id'           => 'buddyforms-tgmpa',
+				// Unique ID for hashing notices for multiple instances of TGMPA.
+				'parent_slug'  => 'plugins.php',
+				// Parent menu slug.
+				'capability'   => 'manage_options',
+				// Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+				'has_notices'  => true,
+				// Show admin notices or not.
+				'dismissable'  => false,
+				// If false, a user cannot dismiss the nag message.
+				'is_automatic' => true,
+				// Automatically activate plugins after installation or not.
+			);
+
+			// Call the tgmpa function to register the required plugins
+			tgmpa( $plugins, $config );
 		}
-
-		$config = array(
-			'id'           => 'buddyforms-tgmpa',  // Unique ID for hashing notices for multiple instances of TGMPA.
-			'parent_slug'  => 'plugins.php',       // Parent menu slug.
-			'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
-			'has_notices'  => true,                // Show admin notices or not.
-			'dismissable'  => false,               // If false, a user cannot dismiss the nag message.
-			'is_automatic' => true,                // Automatically activate plugins after installation or not.
-		);
-
-		// Call the tgmpa function to register the required plugins
-		tgmpa( $plugins, $config );
-
 	} );
 }, 1, 1);
 
