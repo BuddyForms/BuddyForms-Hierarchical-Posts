@@ -30,11 +30,15 @@ function buddyforms_hierarchical_load_css_js( $found ) {
 	return $found;
 }
 
-add_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1 );
+add_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 10, 1 );
 function buddyforms_hierarchical_display_child_posts( $content ) {
 	global $post, $paged, $buddyforms, $form_slug;
 
 	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1 );
+
+	if(!is_single()){
+		return $content;
+	}
 
 	if ( is_admin() ) {
 		return $content;
