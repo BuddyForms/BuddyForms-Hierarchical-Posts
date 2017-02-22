@@ -1,14 +1,14 @@
 <?php
 function buddyforms_hierarchical_form_builder_sidebar_metabox() {
 	add_meta_box( 'buddyforms_hierarchical', __( "Hierarchical Posts", 'buddyforms' ), 'buddyforms_hierarchical_form_builder_sidebar_metabox_html', 'buddyforms', 'normal', 'low' );
-	add_filter('postbox_classes_buddyforms_buddyforms_hierarchical','buddyforms_metabox_class');
-	add_filter('postbox_classes_buddyforms_buddyforms_hierarchical','buddyforms_metabox_show_if_form_type_post');
-	add_filter('postbox_classes_buddyforms_buddyforms_hierarchical','buddyforms_metabox_show_if_post_type_none');
+	add_filter( 'postbox_classes_buddyforms_buddyforms_hierarchical', 'buddyforms_metabox_class' );
+	add_filter( 'postbox_classes_buddyforms_buddyforms_hierarchical', 'buddyforms_metabox_show_if_form_type_post' );
+	add_filter( 'postbox_classes_buddyforms_buddyforms_hierarchical', 'buddyforms_metabox_show_if_post_type_none' );
 
 }
 
 function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
-	global $post;
+	global $post, $buddyforms;
 
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
@@ -23,11 +23,32 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 		$hierarchical = $buddyform['hierarchical'];
 	}
 
-	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Allow Hierarchical Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical]", array( "hierarchical" => "hierarchical" ), array( 'value'     => $hierarchical,
-	                                                                                                                                                                                             'shortDesc' => __( 'hierarchical', 'buddyforms' )
+	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Allow Hierarchical Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical]", array( "hierarchical" => "hierarchical" ), array(
+		'value'     => $hierarchical,
+		'shortDesc' => __( 'hierarchical', 'buddyforms' )
 	) );
 	//$form_setup[] = new Element_Checkbox("<b>" . __('Delete Hierarchical Posts', 'buddyforms') . "</b>", "buddyforms_options[hierarchical]", array("hierarchical" => "hierarchical"), array('value' => $attache, 'shortDesc' => __('hierarchical', 'buddyforms')));
 	$form_setup[]      = new Element_HTML( '<br><br><b>' . __( 'Buttons Label:', 'buddyforms' ) . '</b><br><br>' );
+
+	if(is_array($buddyforms)){
+		$forms['none'] = 'This Form';
+		foreach ( $buddyforms as $form ) {
+			if( $form['slug'] != $post->post_name && $form['form_type'] == 'post' ){
+				$forms[$form['slug']] = $form['name'];
+			}
+		}
+	}
+
+	$different_form = 'none';
+	if ( isset( $buddyform['different_form'] ) ) {
+		$different_form = $buddyform['different_form'];
+	}
+
+
+	$form_setup[]      = new Element_Select('Use Different Form for the Children.', 'different_form', $forms, array( 'value' => $different_form ) );
+
+
+
 	$hierarchical_name = 'Children';
 	if ( isset( $buddyform['hierarchical_name'] ) ) {
 		$hierarchical_name = $buddyform['hierarchical_name'];
@@ -40,7 +61,7 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 	}
 	$form_setup[] = new Element_Textbox( '<b>' . __( 'Singular Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical_singular_name]", array( 'value' => $hierarchical_singular_name ) );
 
-	buddyforms_display_field_group_table($form_setup);
+	buddyforms_display_field_group_table( $form_setup );
 }
 
 add_filter( 'add_meta_boxes', 'buddyforms_hierarchical_form_builder_sidebar_metabox', 1, 2 );
@@ -74,11 +95,11 @@ function bf_hierarchical_add_form_element_to_select( $elements_select_options ) 
 		return;
 	}
 
-	$elements_select_options['hierarchical']['label'] = 'Hierarchical';
-	$elements_select_options['hierarchical']['class'] = 'bf_show_if_f_type_post';
+	$elements_select_options['hierarchical']['label']                  = 'Hierarchical';
+	$elements_select_options['hierarchical']['class']                  = 'bf_show_if_f_type_post';
 	$elements_select_options['hierarchical']['fields']['hierarchical'] = array(
-		'label'     => __( 'Hierarchical', 'buddyforms' ),
-		'unique'    => 'unique'
+		'label'  => __( 'Hierarchical', 'buddyforms' ),
+		'unique' => 'unique'
 	);
 
 	return $elements_select_options;
@@ -176,21 +197,24 @@ function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 			}
 
 			if ( $post_id && get_children( Array( 'post_parent' => $post_id ) ) ) {
-				$element_attr = isset( $customfield['required'] ) ? array( 'disabled'  => 'disabled',
-				                                                           'required'  => true,
-				                                                           'value'     => $post_parent_id,
-				                                                           'class'     => 'settings-input',
-				                                                           'shortDesc' => $customfield['name'] . __( ' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.' )
-				) : array( 'value'     => $post_parent_id,
-				           'class'     => 'settings-input',
-				           'disabled'  => 'disabled',
-				           'shortDesc' => $customfield['name'] . __( ' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.' )
+				$element_attr = isset( $customfield['required'] ) ? array(
+					'disabled'  => 'disabled',
+					'required'  => true,
+					'value'     => $post_parent_id,
+					'class'     => 'settings-input',
+					'shortDesc' => $customfield['name'] . __( ' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.' )
+				) : array(
+					'value'     => $post_parent_id,
+					'class'     => 'settings-input',
+					'disabled'  => 'disabled',
+					'shortDesc' => $customfield['name'] . __( ' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.' )
 				);
 			} else {
-				$element_attr = isset( $customfield['required'] ) ? array( 'required'  => true,
-				                                                           'value'     => $post_parent_id,
-				                                                           'class'     => 'settings-input',
-				                                                           'shortDesc' => $customfield['description']
+				$element_attr = isset( $customfield['required'] ) ? array(
+					'required'  => true,
+					'value'     => $post_parent_id,
+					'class'     => 'settings-input',
+					'shortDesc' => $customfield['description']
 				) : array( 'value' => $post_parent_id, 'class' => 'settings-input' );
 			}
 
