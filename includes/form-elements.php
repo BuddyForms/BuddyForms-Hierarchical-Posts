@@ -45,7 +45,7 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 	}
 
 
-	$form_setup[]      = new Element_Select('Use Different Form for the Children.', 'different_form', $forms, array( 'value' => $different_form ) );
+	$form_setup[]      = new Element_Select('Use Different Form for the Children.', 'buddyforms_options[different_form]', $forms, array( 'value' => $different_form, 'multiple' => 'multiple', 'class' => 'bf-select22' ) );
 
 
 
@@ -168,8 +168,8 @@ function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 				'posts_per_page' => - 1,
 				'post_parent'    => 0,
 				'author'         => get_current_user_id(),
-				'meta_key'       => '_bf_form_slug',
-				'meta_value'     => $form_slug
+//				'meta_key'       => '_bf_form_slug',
+//				'meta_value'     => $form_slug
 			);
 
 
