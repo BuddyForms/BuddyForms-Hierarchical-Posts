@@ -30,10 +30,13 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 	//$form_setup[] = new Element_Checkbox("<b>" . __('Delete Hierarchical Posts', 'buddyforms') . "</b>", "buddyforms_options[hierarchical]", array("hierarchical" => "hierarchical"), array('value' => $attache, 'shortDesc' => __('hierarchical', 'buddyforms')));
 	$form_setup[]      = new Element_HTML( '<br><br><b>' . __( 'Buttons Label:', 'buddyforms' ) . '</b><br><br>' );
 
+
 	if(is_array($buddyforms)){
-		$forms['none'] = 'This Form';
+		$forms[$buddyform['slug']] = 'This Form';
 		foreach ( $buddyforms as $form ) {
 			if( $form['slug'] != $post->post_name && $form['form_type'] == 'post' ){
+				echo get_post_type(get_the_ID());
+				if( isset( $form['post_type'] ) && $form['post_type'] == $buddyform['post_type'] )
 				$forms[$form['slug']] = $form['name'];
 			}
 		}
@@ -45,7 +48,7 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 	}
 
 
-	$form_setup[]      = new Element_Select('Use Different Form for the Children.', 'buddyforms_options[different_form]', $forms, array( 'value' => $different_form, 'multiple' => 'multiple', 'class' => 'bf-select22' ) );
+	$form_setup[]      = new Element_Checkbox('Select Forms to use for the Children.', 'buddyforms_options[different_form]', $forms, array( 'value' => $different_form, 'multiple' => 'multiple', 'class' => '', 'shortDesc' => 'Only forms from the same post type can be used as child forms.' ) );
 
 
 
