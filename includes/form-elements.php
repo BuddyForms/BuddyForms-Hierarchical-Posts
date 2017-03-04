@@ -35,7 +35,6 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 		$forms[$buddyform['slug']] = 'This Form';
 		foreach ( $buddyforms as $form ) {
 			if( $form['slug'] != $post->post_name && $form['form_type'] == 'post' ){
-				echo get_post_type(get_the_ID());
 				if( isset( $form['post_type'] ) && $form['post_type'] == $buddyform['post_type'] )
 				$forms[$form['slug']] = $form['name'];
 			}
@@ -175,11 +174,9 @@ function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 //				'meta_value'     => $form_slug
 			);
 
-
 			$user_parents = new WP_Query( $args );
 
-
-			$parents_select[0] = '(no parent)';
+			$parents_select['none'] = '(no parent)';
 			if ( $user_parents->have_posts() ) {
 				while ( $user_parents->have_posts() ) {
 					$user_parents->the_post();
@@ -187,8 +184,6 @@ function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 						$parents_select[ get_the_id() ] = get_the_title();
 					}
 				}
-			} else {
-				// no posts found
 			}
 			/* Restore original Post Data */
 			wp_reset_postdata();
@@ -199,30 +194,22 @@ function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 				$post_parent_id = $post_parent;
 			}
 
-			if ( $post_id && get_children( Array( 'post_parent' => $post_id ) ) ) {
-				$element_attr = isset( $customfield['required'] ) ? array(
-					'disabled'  => 'disabled',
-					'required'  => true,
-					'value'     => $post_parent_id,
-					'class'     => 'settings-input',
-					'shortDesc' => $customfield['name'] . __( ' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.' )
-				) : array(
-					'value'     => $post_parent_id,
-					'class'     => 'settings-input',
-					'disabled'  => 'disabled',
-					'shortDesc' => $customfield['name'] . __( ' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.' )
-				);
-			} else {
-				$element_attr = isset( $customfield['required'] ) ? array(
-					'required'  => true,
-					'value'     => $post_parent_id,
-					'class'     => 'settings-input',
-					'shortDesc' => $customfield['description']
-				) : array( 'value' => $post_parent_id, 'class' => 'settings-input' );
+			$element_attr = array(
+				'value'     => $post_parent_id != 0 ? $post_parent_id : 'none',
+				'class'     => 'settings-input',
+				'shortDesc' => $customfield['description']
+			);
+
+			if( isset( $customfield['required'] ) ) {
+				$element_attr['required'] = true;
 			}
 
+			if ( $post_id && get_children( Array( 'post_parent' => $post_id ) ) ) {
+				$element_attr['shortDesc'] = $customfield['name'] . __( ' is disabled. This is a parent post and has children. Remove the children first to allow this post become a child.' );
+				$element_attr['disabled'] = 'disabled';
+			}
 
-			$form->addElement( new Element_Select( $customfield['name'], 'hierarchical', $parents_select, $element_attr ) );
+			$form->addElement(  new Element_Select( $customfield['name'], 'hierarchical', $parents_select, $element_attr ) );
 
 			break;
 	}
