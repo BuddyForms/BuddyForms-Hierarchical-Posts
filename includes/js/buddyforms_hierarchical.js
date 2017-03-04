@@ -57,7 +57,26 @@ jQuery(document).ready(function (){
     });
 
 
+    jQuery('.bf_view_form_select').on('click', function(event){
 
+        var modal_id = jQuery(this).attr('id');
+
+        jQuery('<div></div>').dialog({
+            modal: true,
+            title: "Select Type",
+            open: function () {
+                var modal_html = jQuery('#modal-' + modal_id);
+                modal_html.show();
+                jQuery(this).html(modal_html);
+            },
+            buttons: {
+                Ok: function () {
+                    jQuery(this).dialog("close");
+                }
+            }
+        });
+
+    });
 
 
 

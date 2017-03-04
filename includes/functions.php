@@ -113,68 +113,48 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 
 	$permalink = get_permalink( $buddyforms[ $form_slug ]['attached_page'] );
 
-	$different_form = isset( $buddyforms[$form_slug]['different_form'] ) ? $buddyforms[$form_slug]['different_form'] : $form_slug;
+	$hierarchical_forms = isset( $buddyforms[$form_slug]['hierarchical']['hierarchical_forms'] ) ? $buddyforms[$form_slug]['hierarchical']['hierarchical_forms'] : $form_slug;
 
+	$tmp = '<li>';
 
-	if( is_array( $different_form ) ){
-
-		$tmp = '';
-		foreach( $different_form as $l_form_slug ){
-			$permalink_different_form = get_permalink( $buddyforms[ $l_form_slug ]['attached_page'] );
+	$tmp .= '<div id="modal-'. $post->ID .'" style="display: none;">';
+	if( is_array( $hierarchical_forms ) ){
+		foreach( $hierarchical_forms as $l_form_slug ){
+			$permalink_hierarchical_forms = get_permalink( $buddyforms[ $l_form_slug ]['attached_page'] );
 			if ( current_user_can( 'buddyforms_' . $l_form_slug . '_create' ) ) {
-				$tmp .= ' <a class="button" title="' .$buddyforms[$l_form_slug]['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="' . $permalink_different_form . 'create/' . $l_form_slug . '/' . $post_id . '">' . __( 'Create new 2 ', 'buddyforms' ) . $buddyforms[$l_form_slug]['name'].'</a><br>';
+				$tmp .= ' <a class="button" title="' .$buddyforms[$l_form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post->ID . '" class="" href="' . $permalink_hierarchical_forms . 'create/' . $l_form_slug . '/' . $post->ID . '">' . $buddyforms[$l_form_slug]['name'].'</a><br>';
 			}
 		}
-
-		ob_start(); ?>
-		<script>
-            jQuery(document).ready(function (){
-	            jQuery('.bf_view_form_select').on('click', function(event){
-	                jQuery('<div></div>').dialog({
-	                    modal: true,
-	                    title: "Select Type",
-	                    open: function () {
-	                        jQuery(this).html('<?php echo $tmp ?>');
-	                    },
-	                    buttons: {
-	                        Ok: function () {
-	                            jQuery(this).dialog("close");
-	                        }
-	                    }
-	                });
-
-	            });
-            });
-
-		</script>
-		<?php
-		$form_select_js = ob_get_clean();
-		echo $form_select_js;
 	}
+
+	$tmp .= '</div>';
 
 	if ( current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
 
 	    // Add BuddyPress Support and check if BuddyPress is activated and Profile Integration enabled
 		if ( defined( 'BP_VERSION' ) && isset( $buddyforms[ $form_slug ]['profiles_integration'] ) ) {
 
-			if( is_array( $different_form ) ){
-				echo ' <a class="bf_view_form_select" title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="#">' . __( 'Create new  ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical_singular_name'].'</a>';
+			if( is_array( $hierarchical_forms ) ){
+				$tmp .= ' <a class="bf_view_form_select" title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="#">' . __( 'Create new  ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'</a>';
 		    } else {
-				echo ' <a title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="' . $user_domain . $parent_tab . '/' . $different_form . '-create/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical_singular_name'].'</a>';
+				$tmp .= ' <a title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="' . $user_domain . $parent_tab . '/' . $hierarchical_forms . '-create/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'</a>';
 		    }
 
 		} else {
 
-			if( is_array( $different_form ) ){
-				echo ' <a class="bf_view_form_select" title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="#">' . __( 'Create new  ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical_singular_name'].'</a>';
+			if( is_array( $hierarchical_forms ) ){
+				$tmp .= ' <a class="bf_view_form_select" title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="#">' . __( 'Create new  ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'</a>';
 			} else {
-				echo ' <a title="' . __( 'Create ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical_singular_name'] . '" id="' . $post_id . '" class="" href="' . $permalink . 'create/' . $different_form . '/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical_singular_name'] . '</a>';
+				$tmp .= ' <a title="' . __( 'Create ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_singular_name'] . '" id="' . $post_id . '" class="" href="' . $permalink . 'create/' . $hierarchical_forms . '/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_singular_name'] . '</a>';
 			}
 
 		}
 	}
 
-	echo ' - <a title="' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical_name'] . '" href="#" id="' . $post_id . '" class="bf_view_children" type="button">' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical_name'] . '</a>';
+	$tmp .= ' - <a title="' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . '" href="#" id="' . $post_id . '" class="bf_view_children" type="button">' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . '</a>';
+	$tmp .= '</li>';
+
+	echo $tmp;
 }
 
 add_action( 'buddyforms_delete_post', 'buddyforms_delete_child_posts' );
@@ -190,4 +170,16 @@ function buddyforms_delete_child_posts( $post_id ) {
 		wp_delete_post( $child->ID ); // true => bypass trash and permanently delete
 	}
 
+}
+
+add_filter('buddyforms_post_to_display_args', 'buddyforms_hierarchical_the_loop_args', 10, 1);
+add_filter('buddyforms_the_loop_args', 'buddyforms_hierarchical_the_loop_args', 10, 1);
+function buddyforms_hierarchical_the_loop_args( $args ){
+	global $buddyforms;
+
+	if( isset( $buddyforms[$args['form_slug']]['hierarchical']['display_child_posts']) ){
+		$args['post_parent'] = '';
+	}
+
+	return $args;
 }

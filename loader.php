@@ -85,5 +85,4 @@ add_action( 'buddyforms_front_js_css_enqueue', 'buddyforms_hierarchical_front_js
 function buddyforms_hierarchical_front_js_css_enqueue() {
 	wp_enqueue_script( 'buddyforms_hierarchical-js', plugins_url( 'includes/js/buddyforms_hierarchical.js', __FILE__ ), array( 'jquery' ) );
 }
-
 ?>

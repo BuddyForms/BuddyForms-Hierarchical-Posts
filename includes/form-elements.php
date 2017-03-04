@@ -1,13 +1,20 @@
 <?php
-function buddyforms_hierarchical_form_builder_sidebar_metabox() {
-	add_meta_box( 'buddyforms_hierarchical', __( "Hierarchical Posts", 'buddyforms' ), 'buddyforms_hierarchical_form_builder_sidebar_metabox_html', 'buddyforms', 'normal', 'low' );
+
+/*
+ * Create the Form Builder Post metabox
+ */
+add_filter( 'add_meta_boxes', 'buddyforms_hierarchical_form_builder_metabox', 1, 2 );
+function buddyforms_hierarchical_form_builder_metabox() {
+	add_meta_box( 'buddyforms_hierarchical', __( "Hierarchical Posts", 'buddyforms' ), 'buddyforms_hierarchical_form_builder_metabox_html', 'buddyforms', 'normal', 'low' );
 	add_filter( 'postbox_classes_buddyforms_buddyforms_hierarchical', 'buddyforms_metabox_class' );
 	add_filter( 'postbox_classes_buddyforms_buddyforms_hierarchical', 'buddyforms_metabox_show_if_form_type_post' );
 	add_filter( 'postbox_classes_buddyforms_buddyforms_hierarchical', 'buddyforms_metabox_show_if_post_type_none' );
-
 }
 
-function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
+/*
+ * Create the Form Builder matabox html
+ */
+function buddyforms_hierarchical_form_builder_metabox_html() {
 	global $post, $buddyforms;
 
 	if ( $post->post_type != 'buddyforms' ) {
@@ -18,17 +25,17 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 
 	$form_setup = array();
 
-	$hierarchical = '';
-	if ( isset( $buddyform['hierarchical'] ) ) {
-		$hierarchical = $buddyform['hierarchical'];
-	}
-
-	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Allow Hierarchical Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical]", array( "hierarchical" => "hierarchical" ), array(
+	$hierarchical = isset( $buddyform['hierarchical']['hierarchical'] ) ? $buddyform['hierarchical']['hierarchical'] : '';
+	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Allow Hierarchical Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical][hierarchical]", array( "hierarchical" => "hierarchical" ), array(
 		'value'     => $hierarchical,
-		'shortDesc' => __( 'hierarchical', 'buddyforms' )
+		'shortDesc' => __( 'Enable Hierarchical Posts for this form', 'buddyforms' )
 	) );
-	//$form_setup[] = new Element_Checkbox("<b>" . __('Delete Hierarchical Posts', 'buddyforms') . "</b>", "buddyforms_options[hierarchical]", array("hierarchical" => "hierarchical"), array('value' => $attache, 'shortDesc' => __('hierarchical', 'buddyforms')));
-	$form_setup[]      = new Element_HTML( '<br><br><b>' . __( 'Buttons Label:', 'buddyforms' ) . '</b><br><br>' );
+
+	$display_child_posts = isset( $buddyform['hierarchical']['display_child_posts'] ) ? $buddyform['hierarchical']['display_child_posts'] : '';
+	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Display Child Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical][display_child_posts]", array( "display" => "Display Children" ), array(
+		'value'     => $display_child_posts,
+		'shortDesc' => __( 'If you want to use this form as Child Form for a other Parent you should enable this option otherwiuse the child posts does not get displayed in the user submission view', 'buddyforms' )
+	) );
 
 
 	if(is_array($buddyforms)){
@@ -41,55 +48,24 @@ function buddyforms_hierarchical_form_builder_sidebar_metabox_html() {
 		}
 	}
 
-	$different_form = 'none';
-	if ( isset( $buddyform['different_form'] ) ) {
-		$different_form = $buddyform['different_form'];
-	}
+	$hierarchical_forms         = isset( $buddyform['hierarchical']['hierarchical_forms'] )         ? $buddyform['hierarchical']['hierarchical_forms'] : 'none';
+	$hierarchical_name          = isset( $buddyform['hierarchical']['hierarchical_name'] )          ? $buddyform['hierarchical']['hierarchical_name'] : __( 'Children', 'buddyforms' );
+	$hierarchical_singular_name = isset( $buddyform['hierarchical']['hierarchical_singular_name'] ) ? $buddyform['hierarchical']['hierarchical_singular_name'] : __( 'Child', 'buddyforms' );
 
-
-	$form_setup[]      = new Element_Checkbox('Select Forms to use for the Children.', 'buddyforms_options[different_form]', $forms, array( 'value' => $different_form, 'multiple' => 'multiple', 'class' => '', 'shortDesc' => 'Only forms from the same post type can be used as child forms.' ) );
-
-
-
-	$hierarchical_name = 'Children';
-	if ( isset( $buddyform['hierarchical_name'] ) ) {
-		$hierarchical_name = $buddyform['hierarchical_name'];
-	}
-	$form_setup[] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical_name]", array( 'value' => $hierarchical_name ) );
-
-	$hierarchical_singular_name = 'Child';
-	if ( isset( $buddyform['hierarchical_singular_name'] ) ) {
-		$hierarchical_singular_name = $buddyform['hierarchical_singular_name'];
-	}
-	$form_setup[] = new Element_Textbox( '<b>' . __( 'Singular Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical_singular_name]", array( 'value' => $hierarchical_singular_name ) );
+	$form_setup[] = new Element_HTML( '<br><br><b>' . __( 'Buttons Label:', 'buddyforms' ) . '</b><br><br>' );
+	$form_setup[] = new Element_Checkbox('Select Forms to use for the Children.', 'buddyforms_options[hierarchical][hierarchical_forms]', $forms, array( 'value' => $hierarchical_forms, 'multiple' => 'multiple', 'class' => '', 'shortDesc' => 'Only forms from the same post type can be used as child forms.' ) );
+	$form_setup[] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical][hierarchical_name]", array( 'value' => $hierarchical_name ) );
+	$form_setup[] = new Element_Textbox( '<b>' . __( 'Singular Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical][hierarchical_singular_name]", array( 'value' => $hierarchical_singular_name ) );
 
 	buddyforms_display_field_group_table( $form_setup );
 }
 
-add_filter( 'add_meta_boxes', 'buddyforms_hierarchical_form_builder_sidebar_metabox', 1, 2 );
+
 
 /*
- * Add a new form element to the form create view sidebar
- *
- * @param object the form object
- * @param array selected form
- *
- * @return the form object
+ * Add the Hierarchical Form ELement to the Form Element Select
  */
-function bf_hierarchical_add_form_element_to_sidebar( $sidebar_elements ) {
-	global $post;
-
-	if ( $post->post_type != 'buddyforms' ) {
-		return;
-	}
-
-	$sidebar_elements[] = new Element_HTML( '<p><a href="#" data-fieldtype="hierarchical" data-unique="unique" class="bf_add_element_action">Hierarchical</a></p>' );
-
-	return $sidebar_elements;
-}
-
-add_filter( 'buddyforms_add_form_element_to_sidebar', 'bf_hierarchical_add_form_element_to_sidebar', 1, 2 );
-
+add_filter( 'buddyforms_add_form_element_select_option', 'bf_hierarchical_add_form_element_to_select', 1, 2 );
 function bf_hierarchical_add_form_element_to_select( $elements_select_options ) {
 	global $post;
 
@@ -107,13 +83,10 @@ function bf_hierarchical_add_form_element_to_select( $elements_select_options ) 
 	return $elements_select_options;
 }
 
-add_filter( 'buddyforms_add_form_element_select_option', 'bf_hierarchical_add_form_element_to_select', 1, 2 );
-
-
 /*
  * Create the new Form Builder Form Element
- *
  */
+add_filter( 'buddyforms_form_element_add_field', 'bf_hierarchical_create_new_form_builder_form_element', 1, 5 );
 function bf_hierarchical_create_new_form_builder_form_element( $form_fields, $form_slug, $field_type, $field_id ) {
 	global $buddyforms;
 	$buddyforms_options = $buddyforms;
@@ -138,13 +111,11 @@ function bf_hierarchical_create_new_form_builder_form_element( $form_fields, $fo
 	return $form_fields;
 }
 
-add_filter( 'buddyforms_form_element_add_field', 'bf_hierarchical_create_new_form_builder_form_element', 1, 5 );
-
-
 /*
  * Display the new Form Element in the Frontend Form
  *
  */
+add_filter( 'buddyforms_create_edit_form_display_element', 'bf_hierarchical_create_frontend_form_element', 1, 2 );
 function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 	global $buddyforms;
 
@@ -217,8 +188,9 @@ function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 	return $form;
 }
 
-add_filter( 'buddyforms_create_edit_form_display_element', 'bf_hierarchical_create_frontend_form_element', 1, 2 );
-
+/*
+ * Add the post parent to the post args
+ */
 add_filter( 'buddyforms_update_post_args', 'bf_hierarchical_post_control_args', 50, 1 );
 function bf_hierarchical_post_control_args( $args ) {
 
