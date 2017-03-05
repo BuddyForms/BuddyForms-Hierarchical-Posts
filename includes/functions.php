@@ -107,7 +107,7 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 		return;
 	}
 
-	if ( ! isset( $buddyforms[ $form_slug ]['hierarchical'] ) ) {
+	if ( ! isset( $buddyforms[ $form_slug ]['hierarchical']['hierarchical'] ) ) {
 		return;
 	}
 
@@ -120,9 +120,21 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 	$tmp .= '<div id="modal-'. $post->ID .'" style="display: none;">';
 	if( is_array( $hierarchical_forms ) ){
 		foreach( $hierarchical_forms as $l_form_slug ){
-			$permalink_hierarchical_forms = get_permalink( $buddyforms[ $l_form_slug ]['attached_page'] );
+
+
+
+
+
 			if ( current_user_can( 'buddyforms_' . $l_form_slug . '_create' ) ) {
-				$tmp .= ' <a class="button" title="' .$buddyforms[$l_form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post->ID . '" class="" href="' . $permalink_hierarchical_forms . 'create/' . $l_form_slug . '/' . $post->ID . '">' . $buddyforms[$l_form_slug]['name'].'</a><br>';
+				if ( defined( 'BP_VERSION' ) && isset( $buddyforms[ $form_slug ]['profiles_integration'] ) ) {
+					$parent_tab = buddyforms_members_parent_tab( $buddyforms[ $l_form_slug ] );
+					$permalink_hierarchical_forms = trailingslashit( bp_displayed_user_domain() . $parent_tab );
+					$permalink_hierarchical_forms = $permalink_hierarchical_forms . $l_form_slug .'-create/' . $post->ID;
+				} else {
+					$permalink_hierarchical_forms = get_permalink( $buddyforms[ $l_form_slug ]['attached_page'] );
+					$permalink_hierarchical_forms = $permalink_hierarchical_forms . 'create/' . $l_form_slug . '/' . $post->ID;
+				}
+				$tmp .= ' <a class="button" title="' .$buddyforms[$l_form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post->ID . '" class="" href="' . $permalink_hierarchical_forms . '">' . $buddyforms[$l_form_slug]['name'].'</a><br>';
 			}
 		}
 	}
