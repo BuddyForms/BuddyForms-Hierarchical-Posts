@@ -64,6 +64,17 @@ coming soon
 
 == Changelog ==
 
+
+== 1.1 ==
+New option to select child forms and use different forms for the children. Also works with multible forms
+Added new option to allow to display child posts in the normal form views
+Make sure multiple child forms does work with BuddyPress enabled even if one of them is embedded and one is separated but both use the same parent.
+Added new option to select if post children should be added to the parent single above or under the content.
+Restructure the settings page
+Changed the form option array structure
+Restructure the code
+Multiple Fixes
+
 == 1.0.5 ==
 Fixed and issue with the dependencies check. The function tgmpa does not accepted an empty array.
 

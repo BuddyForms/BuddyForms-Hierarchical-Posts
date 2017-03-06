@@ -1,4 +1,8 @@
 <?php
+
+/*
+ * Make sure the js gets loaded if hierarchical view is displayed.
+ */
 add_filter( 'buddyforms_front_js_css_loader', 'buddyforms_hierarchical_load_css_js', 10, 1 );
 function buddyforms_hierarchical_load_css_js( $found ) {
 	global $buddyforms, $post;
@@ -30,6 +34,9 @@ function buddyforms_hierarchical_load_css_js( $found ) {
 	return $found;
 }
 
+/*
+ * Hook the children to the content if parend single is viewed
+ */
 add_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 10, 1 );
 function buddyforms_hierarchical_display_child_posts( $content ) {
 	global $post, $paged, $buddyforms, $form_slug;
@@ -67,10 +74,6 @@ function buddyforms_hierarchical_display_child_posts( $content ) {
 		return $content;
 	}
 
-
-
-
-
 	$post_type = $buddyforms[ $form_slug ]['post_type'];
 
 	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 10, 1 );
@@ -103,6 +106,9 @@ function buddyforms_hierarchical_display_child_posts( $content ) {
 	return $content;
 }
 
+/*
+ * Add "Create new Child" and View Children to the action navigation in the posts lists
+ */
 add_action( 'buddyforms_the_loop_actions', 'buddyforms_hierarchical_the_loop_actions', 10, 1 );
 function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 	global $buddyforms, $post;
@@ -180,6 +186,9 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 	echo $tmp;
 }
 
+/*
+ * Make sure we delete all children if the parent gets deleted
+ */
 add_action( 'buddyforms_delete_post', 'buddyforms_delete_child_posts' );
 function buddyforms_delete_child_posts( $post_id ) {
 
@@ -195,6 +204,9 @@ function buddyforms_delete_child_posts( $post_id ) {
 
 }
 
+/*
+ * If view child posts is enabled we need to remove the 0 from the args array to also query the children
+ */
 add_filter('buddyforms_post_to_display_args', 'buddyforms_hierarchical_the_loop_args', 10, 1);
 add_filter('buddyforms_the_loop_args', 'buddyforms_hierarchical_the_loop_args', 10, 1);
 function buddyforms_hierarchical_the_loop_args( $args ){

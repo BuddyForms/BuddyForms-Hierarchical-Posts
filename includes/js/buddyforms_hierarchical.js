@@ -56,7 +56,6 @@ jQuery(document).ready(function (){
 
     });
 
-
     jQuery('.bf_view_form_select').on('click', function(event){
 
         var modal_id = jQuery(this).attr('id');
@@ -77,7 +76,5 @@ jQuery(document).ready(function (){
         });
 
     });
-
-
 
 });
