@@ -58,9 +58,18 @@ function buddyforms_hierarchical_display_child_posts( $content ) {
 		return $content;
 	}
 
-	if ( ! isset( $buddyforms[ $form_slug ]['hierarchical'] ) ) {
+	if ( ! isset( $buddyforms[ $form_slug ]['hierarchical']['hierarchical'] ) ) {
 		return $content;
 	}
+
+	if ( ! isset( $buddyforms[ $form_slug ]['hierarchical']['display_child_posts_on_parent_single'] )
+	     || $buddyforms[ $form_slug ]['hierarchical']['display_child_posts_on_parent_single'] == 'none' ) {
+		return $content;
+	}
+
+
+
+
 
 	$post_type = $buddyforms[ $form_slug ]['post_type'];
 
@@ -82,7 +91,12 @@ function buddyforms_hierarchical_display_child_posts( $content ) {
 	$bf_form = ob_get_contents();
 	ob_clean();
 
-	$content .= $bf_form;
+	if( $buddyforms[ $form_slug ]['hierarchical']['display_child_posts_on_parent_single'] == 'above'){
+		$content = $bf_form . $content;
+	}
+	if( $buddyforms[ $form_slug ]['hierarchical']['display_child_posts_on_parent_single'] == 'under'){
+		$content .= $bf_form;
+	}
 
 	add_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 10, 1 );
 

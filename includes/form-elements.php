@@ -25,37 +25,44 @@ function buddyforms_hierarchical_form_builder_metabox_html() {
 
 	$form_setup = array();
 
-	$hierarchical = isset( $buddyform['hierarchical']['hierarchical'] ) ? $buddyform['hierarchical']['hierarchical'] : '';
-	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Allow Hierarchical Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical][hierarchical]", array( "hierarchical" => "hierarchical" ), array(
-		'value'     => $hierarchical,
-		'shortDesc' => __( 'Enable Hierarchical Posts for this form', 'buddyforms' )
-	) );
-
-	$display_child_posts = isset( $buddyform['hierarchical']['display_child_posts'] ) ? $buddyform['hierarchical']['display_child_posts'] : '';
-	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Display Child Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical][display_child_posts]", array( "display" => "Display Children" ), array(
-		'value'     => $display_child_posts,
-		'shortDesc' => __( 'If you want to use this form as Child Form for a other Parent you should enable this option otherwiuse the child posts does not get displayed in the user submission view', 'buddyforms' )
-	) );
-
-
 	if(is_array($buddyforms)){
 		$forms[$buddyform['slug']] = 'This Form';
 		foreach ( $buddyforms as $form ) {
 			if( $form['slug'] != $post->post_name && $form['form_type'] == 'post' ){
 				if( isset( $form['post_type'] ) && $form['post_type'] == $buddyform['post_type'] )
-				$forms[$form['slug']] = $form['name'];
+					$forms[$form['slug']] = $form['name'];
 			}
 		}
 	}
 
+	$form_setup[] = new Element_HTML( '<br><br><h4><b>' . __( 'Parent Post Settings', 'buddyforms' ) . '</b></h4><br><br>' );
+	$hierarchical = isset( $buddyform['hierarchical']['hierarchical'] ) ? $buddyform['hierarchical']['hierarchical'] : '';
+	$form_setup[] = new Element_Checkbox( '<b>' .__( 'Allow Hierarchical Posts', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical][hierarchical]", array( "hierarchical" => "Hierarchical Posts" ), array(
+		'value'     => $hierarchical,
+		'shortDesc' => __( 'Enable Hierarchical Posts for this form', 'buddyforms' )
+	) );
+
 	$hierarchical_forms         = isset( $buddyform['hierarchical']['hierarchical_forms'] )         ? $buddyform['hierarchical']['hierarchical_forms'] : 'none';
-	$hierarchical_name          = isset( $buddyform['hierarchical']['hierarchical_name'] )          ? $buddyform['hierarchical']['hierarchical_name'] : __( 'Children', 'buddyforms' );
-	$hierarchical_singular_name = isset( $buddyform['hierarchical']['hierarchical_singular_name'] ) ? $buddyform['hierarchical']['hierarchical_singular_name'] : __( 'Child', 'buddyforms' );
+	$form_setup[] = new Element_Checkbox( '<b>' . __( 'Select Forms to use for the Children.', 'buddyforms'), 'buddyforms_options[hierarchical][hierarchical_forms]', $forms, array( 'value' => $hierarchical_forms, 'multiple' => 'multiple', 'class' => '', 'shortDesc' => 'Only forms from the same post type can be used as child forms.' ) );
 
 	$form_setup[] = new Element_HTML( '<br><br><b>' . __( 'Buttons Label:', 'buddyforms' ) . '</b><br><br>' );
-	$form_setup[] = new Element_Checkbox('Select Forms to use for the Children.', 'buddyforms_options[hierarchical][hierarchical_forms]', $forms, array( 'value' => $hierarchical_forms, 'multiple' => 'multiple', 'class' => '', 'shortDesc' => 'Only forms from the same post type can be used as child forms.' ) );
+	$hierarchical_name = isset( $buddyform['hierarchical']['hierarchical_name'] )          ? $buddyform['hierarchical']['hierarchical_name'] : __( 'Children', 'buddyforms' );
 	$form_setup[] = new Element_Textbox( '<b>' . __( 'Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical][hierarchical_name]", array( 'value' => $hierarchical_name ) );
+	$hierarchical_singular_name = isset( $buddyform['hierarchical']['hierarchical_singular_name'] ) ? $buddyform['hierarchical']['hierarchical_singular_name'] : __( 'Child', 'buddyforms' );
 	$form_setup[] = new Element_Textbox( '<b>' . __( 'Singular Name', 'buddyforms' ) . '</b>', "buddyforms_options[hierarchical][hierarchical_singular_name]", array( 'value' => $hierarchical_singular_name ) );
+
+	$display_child_posts_on_parent_single = isset( $buddyform['hierarchical']['display_child_posts_on_parent_single'] ) ? $buddyform['hierarchical']['display_child_posts_on_parent_single'] : 'none';
+	$form_setup[] = new Element_Select( "<b>" . __( 'Display Child Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical][display_child_posts_on_parent_single]", array( "none" => "Disabled", "above" => "Display above the content", "under" => "Display under the content" ), array(
+		'value'     => $display_child_posts_on_parent_single,
+		'shortDesc' => __( 'You can display the child posts on the parent single view.', 'buddyforms' )
+	) );
+
+	$form_setup[] = new Element_HTML( '<br><br><h4>' . __( 'Child Post Settings:', 'buddyforms' ) . '</h4><br><br>' );
+	$display_child_posts = isset( $buddyform['hierarchical']['display_child_posts'] ) ? $buddyform['hierarchical']['display_child_posts'] : '';
+	$form_setup[] = new Element_Checkbox( "<b>" . __( 'Display Child Posts', 'buddyforms' ) . "</b>", "buddyforms_options[hierarchical][display_child_posts]", array( "display" => "Display Children" ), array(
+		'value'     => $display_child_posts,
+		'shortDesc' => __( 'If you want to use this form as Child Form for a other Parent you should enable this option otherwiuse the child posts does not get displayed in the user submission view', 'buddyforms' )
+	) );
 
 	buddyforms_display_field_group_table( $form_setup );
 }
