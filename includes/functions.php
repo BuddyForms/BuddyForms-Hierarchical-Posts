@@ -161,12 +161,21 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 	if ( current_user_can( 'buddyforms_' . $form_slug . '_create' ) ) {
 
 	    // Add BuddyPress Support and check if BuddyPress is activated and Profile Integration enabled
-		if ( defined( 'BP_VERSION' ) && isset( $buddyforms[ $form_slug ]['profiles_integration'] ) ) {
+		if ( defined('BP_VERSION' ) && isset( $buddyforms[ $form_slug ]['profiles_integration'] ) ) {
+
+			if ( bp_displayed_user_domain() ) {
+				$user_domain = bp_displayed_user_domain();
+			} elseif ( bp_loggedin_user_domain() ) {
+				$user_domain = bp_loggedin_user_domain();
+			} else {
+				return;
+			}
 
 			if( is_array( $hierarchical_forms ) ){
 				$tmp .= ' <a class="bf_view_form_select" title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="#">' . __( 'Create new  ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'</a>';
 		    } else {
-				$tmp .= ' <a title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="' . $user_domain . $parent_tab . '/' . $hierarchical_forms . '-create/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'</a>';
+				$parent_tab = buddyforms_members_parent_tab( $buddyforms[ $form_slug ] );
+				$tmp .= ' <a title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="' . $user_domain . $parent_tab . '/' . $form_slug . '-create/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'</a>';
 		    }
 
 		} else {
@@ -174,7 +183,7 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 			if( is_array( $hierarchical_forms ) ){
 				$tmp .= ' <a class="bf_view_form_select" title="' . __('Create ', 'buddyforms') .$buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post_id . '" class="" href="#">' . __( 'Create new  ', 'buddyforms' ) . $buddyforms[$form_slug]['hierarchical']['hierarchical_singular_name'].'</a>';
 			} else {
-				$tmp .= ' <a title="' . __( 'Create ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_singular_name'] . '" id="' . $post_id . '" class="" href="' . $permalink . 'create/' . $hierarchical_forms . '/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_singular_name'] . '</a>';
+				$tmp .= ' <a title="' . __( 'Create ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_singular_name'] . '" id="' . $post_id . '" class="" href="' . $permalink . 'create/' . $form_slug . '/' . $post_id . '">' . __( 'Create new ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_singular_name'] . '</a>';
 			}
 
 		}
