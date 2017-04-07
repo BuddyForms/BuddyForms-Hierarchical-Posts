@@ -85,4 +85,83 @@ add_action( 'buddyforms_front_js_css_enqueue', 'buddyforms_hierarchical_front_js
 function buddyforms_hierarchical_front_js_css_enqueue() {
 	wp_enqueue_script( 'buddyforms_hierarchical-js', plugins_url( 'includes/js/buddyforms_hierarchical.js', __FILE__ ), array( 'jquery' ) );
 }
-?>
+
+// Create a helper function for easy SDK access.
+function bhp_fs() {
+	global $bhp_fs;
+
+	if ( ! isset( $bhp_fs ) ) {
+		// Include Freemius SDK.
+		if ( file_exists( dirname( dirname( __FILE__ ) ) . '/buddyforms/includes/resources/freemius/start.php' ) ) {
+			// Try to load SDK from parent plugin folder.
+			require_once dirname( dirname( __FILE__ ) ) . '/buddyforms/includes/resources/freemius/start.php';
+		} else if ( file_exists( dirname( dirname( __FILE__ ) ) . '/buddyforms-premium/includes/resources/freemius/start.php' ) ) {
+			// Try to load SDK from premium parent plugin folder.
+			require_once dirname( dirname( __FILE__ ) ) . '/buddyforms-premium/includes/resources/freemius/start.php';
+		} else {
+			require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
+		}
+
+		$bhp_fs = fs_dynamic_init( array(
+			'id'                  => '414',
+			'slug'                => 'buddyforms-hierarchical-posts',
+			'type'                => 'plugin',
+			'public_key'          => 'pk_79dcda1479bebce3a18be2db23c1f',
+			'is_premium'          => false,
+			'has_paid_plans'      => false,
+			'parent'              => array(
+				'id'         => '391',
+				'slug'       => 'buddyforms',
+				'public_key' => 'pk_dea3d8c1c831caf06cfea10c7114c',
+				'name'       => 'BuddyForms',
+			),
+			'menu'                => array(
+				'slug'           => 'edit.php?post_type=buddyforms',
+				'support'        => false,
+			),
+		) );
+	}
+
+	return $bhp_fs;
+}
+
+function bhp_fs_is_parent_active_and_loaded() {
+	// Check if the parent's init SDK method exists.
+	return function_exists( 'buddyforms_core_fs' );
+}
+
+function bhp_fs_is_parent_active() {
+	$active_plugins_basenames = get_option( 'active_plugins' );
+
+	foreach ( $active_plugins_basenames as $plugin_basename ) {
+		if ( 0 === strpos( $plugin_basename, 'buddyforms/' ) ||
+		     0 === strpos( $plugin_basename, 'buddyforms-premium/' )
+		) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function bhp_fs_init() {
+	if ( bhp_fs_is_parent_active_and_loaded() ) {
+		// Init Freemius.
+		bhp_fs();
+
+		// Parent is active, add your init code here.
+	} else {
+		// Parent is inactive, add your error handling here.
+	}
+}
+
+if ( bhp_fs_is_parent_active_and_loaded() ) {
+	// If parent already included, init add-on.
+	bhp_fs_init();
+} else if ( bhp_fs_is_parent_active() ) {
+	// Init add-on only after the parent is loaded.
+	add_action( 'buddyforms_core_fs_loaded', 'bhp_fs_init' );
+} else {
+	// Even though the parent is not activated, execute add-on for activation / uninstall hooks.
+	bhp_fs_init();
+}
