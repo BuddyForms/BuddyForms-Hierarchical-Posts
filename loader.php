@@ -3,7 +3,7 @@
  Plugin Name: BuddyForms Hierarchical Posts
  Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
  Description: BuddyForms Hierarchical Posts like Journal/logs
- Version: 1.1
+ Version: 1.1.1
  Author: ThemeKraft
  Author URI: https://themekraft.com/buddyforms/
  License: GPLv2 or later
@@ -87,10 +87,10 @@ function buddyforms_hierarchical_front_js_css_enqueue() {
 }
 
 // Create a helper function for easy SDK access.
-function bhp_fs() {
-	global $bhp_fs;
+function buddyforms_hp_fs() {
+	global $buddyforms_hp_fs;
 
-	if ( ! isset( $bhp_fs ) ) {
+	if ( ! isset( $buddyforms_hp_fs ) ) {
 		// Include Freemius SDK.
 		if ( file_exists( dirname( dirname( __FILE__ ) ) . '/buddyforms/includes/resources/freemius/start.php' ) ) {
 			// Try to load SDK from parent plugin folder.
@@ -102,7 +102,7 @@ function bhp_fs() {
 			require_once dirname(__FILE__) . '/includes/resources/freemius/start.php';
 		}
 
-		$bhp_fs = fs_dynamic_init( array(
+		$buddyforms_hp_fs = fs_dynamic_init( array(
 			'id'                  => '414',
 			'slug'                => 'buddyforms-hierarchical-posts',
 			'type'                => 'plugin',
@@ -122,15 +122,15 @@ function bhp_fs() {
 		) );
 	}
 
-	return $bhp_fs;
+	return $buddyforms_hp_fs;
 }
 
-function bhp_fs_is_parent_active_and_loaded() {
+function buddyforms_hp_fs_is_parent_active_and_loaded() {
 	// Check if the parent's init SDK method exists.
 	return function_exists( 'buddyforms_core_fs' );
 }
 
-function bhp_fs_is_parent_active() {
+function buddyforms_hp_fs_is_parent_active() {
 	$active_plugins_basenames = get_option( 'active_plugins' );
 
 	foreach ( $active_plugins_basenames as $plugin_basename ) {
@@ -144,10 +144,10 @@ function bhp_fs_is_parent_active() {
 	return false;
 }
 
-function bhp_fs_init() {
-	if ( bhp_fs_is_parent_active_and_loaded() ) {
+function buddyforms_hp_fs_init() {
+	if ( buddyforms_hp_fs_is_parent_active_and_loaded() ) {
 		// Init Freemius.
-		bhp_fs();
+		buddyforms_hp_fs();
 
 		// Parent is active, add your init code here.
 	} else {
@@ -155,13 +155,13 @@ function bhp_fs_init() {
 	}
 }
 
-if ( bhp_fs_is_parent_active_and_loaded() ) {
+if ( buddyforms_hp_fs_is_parent_active_and_loaded() ) {
 	// If parent already included, init add-on.
-	bhp_fs_init();
-} else if ( bhp_fs_is_parent_active() ) {
+	buddyforms_hp_fs_init();
+} else if ( buddyforms_hp_fs_is_parent_active() ) {
 	// Init add-on only after the parent is loaded.
-	add_action( 'buddyforms_core_fs_loaded', 'bhp_fs_init' );
+	add_action( 'buddyforms_core_fs_loaded', 'buddyforms_hp_fs_init' );
 } else {
 	// Even though the parent is not activated, execute add-on for activation / uninstall hooks.
-	bhp_fs_init();
+	buddyforms_hp_fs_init();
 }
