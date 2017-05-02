@@ -42,6 +42,7 @@ function buddyforms_hierarchical_ajax_view_children() {
 	$args = apply_filters( 'buddyforms_post_to_display_args', $args );
 
 	$the_lp_query = new WP_Query( $args );
+	$the_lp_query = apply_filters('buddyforms_the_lp_query', $the_lp_query );
 
 	echo '<h2>' . __( 'View all ', '' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . __( ' of ', 'buddyforms' ) . ' <a href="' . get_post_permalink( $post_parent ) . '">' . get_the_title( $post_parent ) . '</a></h2>';
 
