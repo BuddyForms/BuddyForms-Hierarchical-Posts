@@ -4,7 +4,7 @@ Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
 Description: Create, manage and display hierarchical posts based on parent- and child relationships for a better user experience.
 Tags: hierarchical, hierarchical posts, hierarchical post, page, pages, custom post types, hierarchically, frontend posting, frontend editing, post relations, posts relations,
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires at least: 3.9
 Tested up to: 4.7.3
 License: GPLv2 or later
@@ -122,6 +122,10 @@ make sure it is uploaded to "/wp-content/plugins/".
 
 
 == Changelog ==
+
+= 1.1.2 =
+Added new filter buddyforms_the_lp_query to adjust the query result.
+Smaller bug fixes like checks to avoid notices.
 
 = 1.1.1 =
 Added buddyforms_members_parent_tab freemius integration

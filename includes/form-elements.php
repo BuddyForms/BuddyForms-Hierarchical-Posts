@@ -175,7 +175,7 @@ function bf_hierarchical_create_frontend_form_element( $form, $form_args ) {
 			$element_attr = array(
 				'value'     => $post_parent_id != 0 ? $post_parent_id : 'none',
 				'class'     => 'settings-input',
-				'shortDesc' => $customfield['description']
+				'shortDesc' => empty($customfield['description']) ? '' : $customfield['description'],
 			);
 
 			if( isset( $customfield['required'] ) ) {

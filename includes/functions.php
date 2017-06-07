@@ -150,7 +150,8 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 					$permalink_hierarchical_forms = get_permalink( $buddyforms[ $l_form_slug ]['attached_page'] );
 					$permalink_hierarchical_forms = $permalink_hierarchical_forms . 'create/' . $l_form_slug . '/' . $post->ID;
 				}
-				$tmp .= ' <a class="button" title="' .$buddyforms[$l_form_slug]['hierarchical']['hierarchical_singular_name'].'" id="' . $post->ID . '" class="" href="' . $permalink_hierarchical_forms . '">' . $buddyforms[$l_form_slug]['name'].'</a><br>';
+				$desc = isset( $buddyforms[$l_form_slug]['hierarchical']['hierarchical_singular_name'] ) ? $buddyforms[$l_form_slug]['hierarchical']['hierarchical_singular_name'] : 'Create new child post';
+				$tmp .= ' <a class="button" title="' . $desc .'" id="' . $post->ID . '" class="" href="' . $permalink_hierarchical_forms . '">' . $buddyforms[$l_form_slug]['name'].'</a><br>';
 			}
 
 		}
