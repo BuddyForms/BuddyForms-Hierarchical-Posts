@@ -190,7 +190,7 @@ function buddyforms_hierarchical_the_loop_actions( $post_id ) {
 		}
 	}
 
-	$tmp .= ' - <a title="' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . '" href="#" id="' . $post_id . '" class="bf_view_children" type="button">' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . '</a>';
+	$tmp .= ' <a title="' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . '" href="#" id="' . $post_id . '" class="bf_view_children" type="button">' . __( 'View ', 'buddyforms' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . '</a>';
 	$tmp .= '</li>';
 
 	echo $tmp;
