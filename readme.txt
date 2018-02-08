@@ -4,9 +4,9 @@ Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
 Description: Create, manage and display hierarchical posts based on parent- and child relationships for a better user experience.
 Tags: hierarchical, hierarchical posts, hierarchical post, page, pages, custom post types, hierarchically, frontend posting, frontend editing, post relations, posts relations,
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 Requires at least: 3.9
-Tested up to: 4.7.3
+Tested up to: 4.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,14 +123,20 @@ make sure it is uploaded to "/wp-content/plugins/".
 
 == Changelog ==
 
+= 1.1.3 =
+* Give modal a css class, make it not resizable, remove the ok button (because you just need to choose an option and thats it, no extra ok click)
+* CSS added to the-loop.css in buddyforms
+* Removed the - from the link. We have redesigned the buttons
+* Freemius SDK update
+
 = 1.1.2 =
-Added new filter buddyforms_the_lp_query to adjust the query result.
-Smaller bug fixes like checks to avoid notices.
+* Added new filter buddyforms_the_lp_query to adjust the query result.
+* Smaller bug fixes like checks to avoid notices.
 
 = 1.1.1 =
-Added buddyforms_members_parent_tab freemius integration
-Added function exist buddyforms_members_parent_tab
-Make sure hierarchical posts du work with BuddyPress.
+* Added buddyforms_members_parent_tab freemius integration
+* Added function exist buddyforms_members_parent_tab
+* Make sure hierarchical posts du work with BuddyPress.
 
 = 1.1 =
 * New option to select child forms and use different forms for the children. Also works with multible forms
