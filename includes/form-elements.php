@@ -17,6 +17,10 @@ function buddyforms_hierarchical_form_builder_metabox() {
 function buddyforms_hierarchical_form_builder_metabox_html() {
 	global $post, $buddyforms;
 
+	if ( empty( $post ) ) {
+		return;
+	}
+
 	if ( $post->post_type != 'buddyforms' ) {
 		return;
 	}

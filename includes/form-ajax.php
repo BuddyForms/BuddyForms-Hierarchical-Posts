@@ -46,7 +46,7 @@ function buddyforms_hierarchical_ajax_view_children() {
 
 	echo '<h4>' . __( 'View all ', '' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . __( ' of ', 'buddyforms' ) . ' <a href="' . get_post_permalink( $post_parent ) . '">' . get_the_title( $post_parent ) . '</a></h4>';
 
-	buddyforms_locate_template( 'the-loop' );
+	buddyforms_locate_template( 'the-loop', $form_slug );
 
 	// Support for wp_pagenavi
 	if ( function_exists( 'wp_pagenavi' ) ) {
