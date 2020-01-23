@@ -62,18 +62,18 @@ jQuery(document).ready(function (){
 
         jQuery('<div class="bf-popup-button"></div>').dialog({
             modal: true,
-            resizable : false,
+            resizable : true,
             title: "Select Type",
             open: function () {
                 var modal_html = jQuery('#modal-' + modal_id);
                 modal_html.show();
                 jQuery(this).html(modal_html);
             },
-            // buttons: {
-            //     Ok: function () {
-            //         jQuery(this).dialog("close");
-            //     }
-            // }
+            buttons: {
+                Ok: function () {
+                    jQuery(this).dialog("close");
+                }
+            }
         });
 
     });
