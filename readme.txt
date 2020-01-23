@@ -4,9 +4,9 @@ Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
 Description: Create, manage and display hierarchical posts based on parent- and child relationships for a better user experience.
 Tags: hierarchical, hierarchical posts, hierarchical post, page, pages, custom post types, hierarchically, frontend posting, frontend editing, post relations, posts relations,
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 Requires at least: 3.9
-Tested up to: 5.0
+Tested up to: 5.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,14 @@ make sure it is uploaded to "/wp-content/plugins/".
 
 
 == Changelog ==
+
+= 1.1.5 -  Mar. 23 2020 =
+* Fixed some jQuery issues with the dialog
+* Fixed the css
+* Added the child forms as links to the modal and make the modal work nicely.
+* Updated TGM to the latest version
+* Several bug fixes and improvements
+
 = 1.1.4 -  Mar. 03 2019 =
 * Freemius SDK Update
 
