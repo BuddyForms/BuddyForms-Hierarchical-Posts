@@ -41,7 +41,7 @@ add_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 10, 1 
 function buddyforms_hierarchical_display_child_posts( $content ) {
 	global $post, $paged, $buddyforms, $form_slug;
 
-	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50, 1 );
+	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 50 );
 
 	if(!is_single()){
 		return $content;
@@ -76,7 +76,7 @@ function buddyforms_hierarchical_display_child_posts( $content ) {
 
 	$post_type = $buddyforms[ $form_slug ]['post_type'];
 
-	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 10, 1 );
+	remove_filter( 'the_content', 'buddyforms_hierarchical_display_child_posts', 10);
 
 	$args = array(
 		'post_type'      => $post_type,
