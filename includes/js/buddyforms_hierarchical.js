@@ -42,8 +42,16 @@ jQuery(document).ready(function (){
                 jQuery('.buddyforms_posts_list .bf_modal').show();
             },
             success: function(data){
-                jQuery('.buddyforms_posts_list .bf_modal').hide();
-                jQuery('.buddyforms_posts_list').replaceWith(data);
+                var childrenList = jQuery.parseJSON( data );
+                if(childrenList.list_posts_style==='table'){
+                    jQuery('.buddyforms_posts_table .bf_modal').hide();
+                    jQuery('.buddyforms_posts_table').replaceWith(childrenList.data);
+                }
+                else{
+                    jQuery('.buddyforms_posts_list .bf_modal').hide();
+                    jQuery('.buddyforms_posts_list').replaceWith(childrenList.data);
+                }
+
 
                 // remove existing editor instance
                 tinymce.execCommand('mceRemoveEditor', true, 'buddyforms_form_content');

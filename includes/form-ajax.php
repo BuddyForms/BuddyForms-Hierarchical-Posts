@@ -43,15 +43,21 @@ function buddyforms_hierarchical_ajax_view_children() {
 
 	$the_lp_query = new WP_Query( $args );
 	$the_lp_query = apply_filters('buddyforms_the_lp_query', $the_lp_query );
+	ob_start();
 
 	echo '<h4>' . __( 'View all ', '' ) . $buddyforms[ $form_slug ]['hierarchical']['hierarchical_name'] . __( ' of ', 'buddyforms' ) . ' <a href="' . get_post_permalink( $post_parent ) . '">' . get_the_title( $post_parent ) . '</a></h4>';
 
 	buddyforms_locate_template( 'the-loop', $form_slug );
 
+
 	// Support for wp_pagenavi
 	if ( function_exists( 'wp_pagenavi' ) ) {
 		wp_pagenavi( array( 'query' => $the_lp_query ) );
 	}
-
+	$output = ob_get_contents();
+	ob_clean();
+    $list_posts_style = $buddyforms[ $form_slug ]['list_posts_style'];
+    $result = array('list_posts_style'=>$list_posts_style,'data'=>$output);
+    echo json_encode($result);
 	die();
 }
