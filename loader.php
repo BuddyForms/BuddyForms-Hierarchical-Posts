@@ -1,15 +1,15 @@
 <?php
 /*
- Plugin Name: BuddyForms Hierarchical Posts
- Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
- Description: BuddyForms Hierarchical Posts like Journal/logs
- Version: 1.1.5
- Author: ThemeKraft
- Author URI: https://themekraft.com/buddyforms/
- License: GPLv2 or later
- Network: false
- Text Domain: buddyforms
-
+ * Plugin Name: BuddyForms Hierarchical Posts
+ * Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
+ * Description: BuddyForms Hierarchical Posts like Journal/logs
+ * Version: 1.1.6-beta1
+ * Author: ThemeKraft
+ * Author URI: https://themekraft.com/buddyforms/
+ * License: GPLv2 or later
+ * Network: false
+ * Text Domain: buddyforms
+ * Svn: buddyforms-hierarchical-posts
  *****************************************************************************
  *
  * This script is free software; you can redistribute it and/or modify
