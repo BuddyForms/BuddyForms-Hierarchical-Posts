@@ -27,9 +27,14 @@ function buddyforms_hierarchical_form_builder_metabox_html() {
 
 	$buddyform = get_post_meta( get_the_ID(), '_buddyforms_options', true );
 
+	if ( empty( $buddyform ) ) {
+		_e( 'Save the form before use this feature.', 'buddyforms' );
+		return;
+	}
+
 	$form_setup = array();
 
-	if(is_array($buddyforms)){
+	if( is_array( $buddyforms ) ){
 		$forms[$buddyform['slug']] = 'This Form';
 		foreach ( $buddyforms as $form ) {
 			if( $form['slug'] != $post->post_name && $form['form_type'] == 'post' ){
