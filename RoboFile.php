@@ -24,7 +24,7 @@ class RoboFile extends RoboFileBase {
 	}
 
 	public function minifyAssetsDirectories() {
-		return array( 'assets' );
+		return array();
 	}
 
 	public function minifyImagesDirectories() {
