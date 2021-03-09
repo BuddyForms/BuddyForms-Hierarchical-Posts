@@ -16,10 +16,8 @@
     }
   ],
   "minimum-stability": "stable",
-  "scripts": {
-    "package": "sh .tk/package.sh loader",
-    "wp-release": "sh .tk/wp_release.sh",
-    "beta-release": "sh .tk/full-deploy.sh loader 414 false beta",
-    "full-release": "sh .tk/full-deploy.sh loader 414 false released"
+  "require-dev": {
+    "consolidation/robo": "^1.0.0",
+    "bamarni/composer-bin-plugin": "dev-master"
   }
 }
