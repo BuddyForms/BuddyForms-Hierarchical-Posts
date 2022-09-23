@@ -107,8 +107,8 @@ function buddyforms_hp_fs() {
 			'slug'                => 'buddyforms-hierarchical-posts',
 			'type'                => 'plugin',
 			'public_key'          => 'pk_79dcda1479bebce3a18be2db23c1f',
-			'is_premium'          => false,
-			'has_paid_plans'      => false,
+			'is_premium'          => true,
+			'has_paid_plans'      => true,
 			'is_org_compliant'    => false,
 			'parent'              => array(
 				'id'         => '391',
