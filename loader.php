@@ -108,6 +108,8 @@ function buddyforms_hp_fs() {
 			'type'                => 'plugin',
 			'public_key'          => 'pk_79dcda1479bebce3a18be2db23c1f',
 			'is_premium'          => true,
+			'premium_suffix'      => 'Professional',
+			'has_premium_version' => true,
 			'has_paid_plans'      => true,
 			'is_org_compliant'    => false,
 			'parent'              => array(
