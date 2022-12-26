@@ -3,7 +3,7 @@
  * Plugin Name: BuddyForms Hierarchical Posts
  * Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
  * Description: BuddyForms Hierarchical Posts like Journal/logs
- * Version: 1.1.10
+ * Version: 1.1.11
  * Author: ThemeKraft
  * Author URI: https://themekraft.com/buddyforms/
  * License: GPLv2 or later
@@ -111,6 +111,10 @@ function buddyforms_hp_fs() {
 			'is_premium_only'     => true,
 			'has_paid_plans'      => true,
 			'is_org_compliant'    => false,
+			'trial'               => array(
+                    'days'               => 7,
+                    'is_require_payment' => false,
+                ),
 			'parent'              => array(
 				'id'         => '391',
 				'slug'       => 'buddyforms',

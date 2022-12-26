@@ -4,9 +4,9 @@ Author: Sven Lehnert
 Plugin URI: http://buddyforms.com/downloads/buddyforms-hierarchical-posts/
 Description: Create, manage and display hierarchical posts based on parent- and child relationships for a better user experience.
 Tags: hierarchical, hierarchical posts, hierarchical post, page, pages, custom post types, hierarchically, frontend posting, frontend editing, post relations, posts relations,
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 Requires at least: 3.9
-Tested up to: 6.0.2
+Tested up to: 6.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,10 @@ make sure it is uploaded to "/wp-content/plugins/".
 
 
 == Changelog ==
+= 1.1.11 - 26 Dec 2022 =
+* Enabled trial version.
+* Tested up to WordPress 6.1.1
+
 = 1.1.10 - 04 Oct 2022 =
 * Fixed issue with plugin download url
 
